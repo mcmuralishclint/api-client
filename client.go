@@ -1,7 +1,42 @@
 package client
 
-import "fmt"
+import (
+	"fmt"
+	"gopkg.in/yaml.v3"
+	"io/ioutil"
+)
 
-func Test() {
-	fmt.Println("Test")
+type Config struct {
+	services []Service
+}
+
+type Service struct {
+	base     string
+	versions []Version
+}
+
+type Version struct {
+	apis []Api
+}
+type Api struct {
+	endpoint string
+	verb     string
+}
+
+func Init() {
+	c := &Config{}
+	c = c.loadConfig()
+	fmt.Println(c)
+}
+
+func (c *Config) loadConfig() *Config {
+	yamlFile, err := ioutil.ReadFile("config.yml")
+	if err != nil {
+		fmt.Printf("yamlFile.Get err   #%v ", err)
+	}
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		fmt.Printf("Unmarshal: %v", err)
+	}
+	return c
 }
