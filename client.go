@@ -23,10 +23,11 @@ type Api struct {
 	verb     string
 }
 
+var config *Config
+
 func Init() {
 	c := &Config{}
-	c = c.loadConfig()
-	fmt.Println(c)
+	config = c.loadConfig()
 }
 
 func (c *Config) loadConfig() *Config {
@@ -39,4 +40,9 @@ func (c *Config) loadConfig() *Config {
 		fmt.Printf("Unmarshal: %v", err)
 	}
 	return c
+}
+
+func Test() {
+	fmt.Println(&config)
+	fmt.Println(config)
 }
