@@ -1,48 +1,31 @@
-package client
+package main
 
-import (
-	"fmt"
-	"gopkg.in/yaml.v3"
-	"io/ioutil"
-)
-
-type Config struct {
-	services []Service
-}
-
-type Service struct {
-	base     string
-	versions []Version
-}
-
-type Version struct {
-	apis []Api
-}
-type Api struct {
-	endpoint string
-	verb     string
-}
+import "fmt"
 
 var config *Config
 
-func Init() {
-	c := &Config{}
-	config = c.loadConfig()
+type Req struct {
+	Service string
+	Version string
+	Name    string
 }
 
-func (c *Config) loadConfig() *Config {
-	yamlFile, err := ioutil.ReadFile("config.yml")
-	if err != nil {
-		fmt.Printf("yamlFile.Get err   #%v ", err)
-	}
-	err = yaml.Unmarshal(yamlFile, c)
-	if err != nil {
-		fmt.Printf("Unmarshal: %v", err)
-	}
-	return c
+type Res struct {
+	Path string
+	Verb string
 }
 
-func Test() {
-	fmt.Println(&config)
-	fmt.Println(config)
+func main() {
+	config = Parser("config.yml")
+	req := &Req{Service: "laas", Version: "v1", Name: "create_shipment"}
+	res := req.RetreiveConfig()
+	fmt.Println(res)
+}
+
+func (request *Req) RetreiveConfig() *Res {
+	service := config.Services[request.Service]
+	baseUrl := service.BaseUrl
+	api := service.Version[request.Version][request.Name]
+	endpoint := baseUrl + api.Path
+	return &Res{Path: endpoint, Verb: api.Verb}
 }

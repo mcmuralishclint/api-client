@@ -1,8 +1,28 @@
+info:
+  title: "Circles Serices Configs"
+  description: "Sample Configurations"
 services:
   oms:
-    base: 'http://mytestapi.com'
+    name: "Order Management Service"
+    base_url: "http://myoms.com"
     version:
       v1:
         create_order:
-          - endpoint: /api/v1/web/orders/create_order
-          - verb: GET
+          path: "/api/v1/orders/create"
+          verb: "POST"
+      v2:
+        create_order:
+          path: "/api/v2/orders/create"
+          verb: "POST"
+  laas:
+    name: "Logistic Management Service"
+    base_url: "http://mylaas.com"
+    version:
+      v1:
+        create_shipment:
+          path: "/api/v1/shipment/create"
+          verb: "POST"
+      v2:
+        create_shipment:
+          path: "/api/v2/orders/create"
+          verb: "POST"
