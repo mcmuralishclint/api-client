@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-var config *Config
+var configuration *Config
 
 type Req struct {
 	Service string
@@ -15,15 +15,18 @@ type Res struct {
 	Verb string
 }
 
+func init() {
+	configuration = parser("config.yml")
+}
+
 func main() {
-	config = Parser("config.yml")
 	req := &Req{Service: "laas", Version: "v1", Name: "create_shipment"}
 	res := req.RetreiveConfig()
 	fmt.Println(res)
 }
 
 func (request *Req) RetreiveConfig() *Res {
-	service := config.Services[request.Service]
+	service := configuration.Services[request.Service]
 	baseUrl := service.BaseUrl
 	api := service.Version[request.Version][request.Name]
 	endpoint := baseUrl + api.Path
