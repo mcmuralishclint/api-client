@@ -22,7 +22,7 @@ type Endpoint struct {
 	Verb string
 }
 
-func Parser(filename string) *Config {
+func parser(filename string) *Config {
 	ymlData, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatal(err)
