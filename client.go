@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 var configuration *Config
 
 func init() {
@@ -9,7 +7,6 @@ func init() {
 }
 
 func main() {
-	req := &Req{Service: "laas", Version: "v1", Name: "create_shipment"}
-	res := req.RetreiveConfig()
-	fmt.Println(res)
+	req := &Req{Service: "product", Version: "v1", Path: "get_products"}
+	req.MakeHttpCall()
 }

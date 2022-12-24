@@ -14,14 +14,17 @@ services:
         create_order:
           path: "/api/v2/orders/create"
           verb: "POST"
-  laas:
-    name: "Logistic Management Service"
-    base_url: "http://mylaas.com"
+  product:
+    name: "Product Management Service"
+    base_url: "https://fakestoreapi.com"
     version:
       v1:
-        create_shipment:
-          path: "/api/v1/shipment/create"
-          verb: "POST"
+        get_products:
+          path: "/products"
+          verb: "GET"
+        get_product:
+          path: "/products/1"
+          verb: "GET"
       v2:
         create_shipment:
           path: "/api/v2/orders/create"
